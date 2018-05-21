@@ -1,0 +1,76 @@
+<html>
+<head>
+  <title>Simple client</title>
+  
+  <script type="text/javascript">
+
+    var ws;
+    
+    function init() {
+
+      // Connect to Web Socket
+      ws = new WebSocket("ws://127.0.0.1:5678/");
+
+      // Set event handlers.
+      ws.onopen = function() {
+        output("Connection Open");
+      };
+      
+      ws.onmessage = function(e) {
+        // e.data contains received string.
+        output("Python Prompt: " + e.data);
+      };
+      
+      ws.onclose = function() {
+        output("No Connection");
+      };
+
+      ws.onerror = function(e) {
+        output("onerror");
+        console.log(e)
+      };
+
+    }
+    
+    function onSubmit() {
+      var input = document.getElementById("input");
+      // You can send message to the Web Socket using ws.send.
+      ws.send(input.value);
+      output("Browser Prompt: " + input.value);
+      input.value = "";
+      input.focus();
+    }
+    
+    function onCloseClick() {
+      ws.close();
+    }
+    
+    function output(str) {
+      var log = document.getElementById("log");
+      var escaped = str.replace(/&/, "&amp;").replace(/</, "&lt;").
+        replace(/>/, "&gt;").replace(/"/, "&quot;"); // "
+      log.innerHTML = escaped + "<br>" + log.innerHTML;
+    }
+
+  </script>
+
+<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
+
+
+</head>
+<body onload="init();">
+  <center>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+  <form onsubmit="onSubmit(); return false;">
+    <input type="text" id="input">
+    <input type="submit" class="btn btn-primary" value="Send">
+    <button class="btn btn-success" onclick="onCloseClick(); return false;">close</button>
+  </form>
+  <div id="log"></div>
+  </center>
+</body>
+</html>

