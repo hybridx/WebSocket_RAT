@@ -17,3 +17,8 @@
 				
 
 		
+```
+Run the index.html separately
+python3 -m http.server
+on the root of the project
+```
